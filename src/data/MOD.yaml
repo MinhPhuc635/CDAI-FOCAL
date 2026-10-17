@@ -2,7 +2,7 @@
 pretrain_index_file: "Replace with your pretrain index file path"
 vehicle_classification:
         num_classes: 7  # number of classes
-        class_names: ["Polaris", "Warhog", "Truck", "motor", "tesla", "mustang", "walk"]
+        class_names: ["fotuner", "innova", "santafe", "motor", "vinfast", "vios", "walk"]
         train_index_file: "Replace with your train index file path"
         val_index_file: "Replace with your index file path"
         test_index_file: "Replace with your index file path"
