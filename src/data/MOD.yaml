@@ -196,6 +196,7 @@ FOCAL:
         temperature: 
                 SW_Transformer: 0.07
                 DeepSense: 0.5
+                DINOv3: 0.07
         ranking_margin: 0.0
         inter_rank_margin: 1
         intra_rank_margin: 0.05
@@ -206,7 +207,7 @@ FOCAL:
         # Pre training  
         pretrain_optimizer:
                 name: "AdamW"
-                start_lr: 0.001
+                start_lr: 0.0001
                 warmup_lr: 0.000001
                 min_lr: 0.0000001
                 clip_grad: 5.0
@@ -215,7 +216,7 @@ FOCAL:
                 name: "cosine"
                 warmup_prefix: True
                 warmup_epochs: 0
-                train_epochs: 6000
+                train_epochs: 50
                 start_epoch: 0
                 decay_epochs: 500
                 decay_rate: 0.2
@@ -229,6 +230,7 @@ FOCAL:
                 weight_decay:  
                         SW_Transformer: 0.005
                         DeepSense: 0.005
+                        DINOv3: 0.005
                 decay_rate: 0.2
         finetune_lr_scheduler:
                 name: "cosine"
