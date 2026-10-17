@@ -8,7 +8,7 @@ Arxiv Link [[pdf](https://arxiv.org/abs/2310.20071)]
 
 This paper proposes a novel contrastive learning framework, called FOCAL, for extracting comprehensive features from multimodal time-series sensing signals through self-supervised training. Existing multimodal contrastive frameworks mostly rely on the shared information between sensory modalities, but do not explicitly consider the exclusive modality information that could be critical to understanding the underlying sensing physics. Besides, contrastive frameworks for time series have not handled the temporal information locality appropriately. FOCAL solves these challenges by making the following contributions: First, given multimodal time series, it encodes each modality into a factorized latent space consisting of shared features and private features that are orthogonal to each other. The shared space emphasizes feature patterns consistent across sensory modalities through a modal-matching objective. In contrast, the private space extracts modality-exclusive information through a transformation-invariant objective. Second, we propose a temporal structural constraint for modality features, such that the average distance between temporally neighboring samples is no larger than that of temporally distant samples. Extensive evaluations are performed on four multimodal sensing datasets with two backbone encoders and two classifiers to demonstrate the superiority of FOCAL. It consistently outperforms the state-of-the-art baselines in downstream tasks with a clear margin, under different ratios of available labels.
 
-### 🆕 [MỚI] Modifications in this fork
+### [NEW] Modifications in this fork
 
 This fork extends the original FOCAL code with the following changes:
 
@@ -19,7 +19,7 @@ This fork extends the original FOCAL code with the following changes:
 
 ## Installation and Requirements
 
-### ✏️ [SỬA] Local machine
+### [UPDATE] Local machine
 
 1. **Dependencies**: ```conda create -n [NAME] python=3.10; conda activate [NAME]```
 
@@ -31,13 +31,13 @@ This fork extends the original FOCAL code with the following changes:
     pip install -r requirements.txt
 ```
 
-3. 🆕 [MỚI] **For the DINOv3 backbone**, additionally install a recent Transformers library:
+3. [NEW] **For the DINOv3 backbone**, additionally install a recent Transformers library:
 
 ```bash
     pip install -U "transformers>=4.56" huggingface_hub
 ```
 
-### 🆕 [MỚI] Google Colab
+### [NEW] Google Colab
 
 Do **not** run `pip install -r requirements.txt` on Colab: it pins an old PyTorch/CUDA stack and conflicts with the Colab environment. Install only what is needed:
 
@@ -49,7 +49,7 @@ pip install -q "transformers>=4.56" tsai timm einops scikit-learn pyyaml tqdm hu
 
 Select a GPU runtime (**Runtime → Change runtime type → T4 GPU**).
 
-### 🆕 [MỚI] Getting the DINOv3 weights
+### [NEW] Getting the DINOv3 weights
 
 DINOv3 is a gated model on Hugging Face.
 
@@ -73,7 +73,7 @@ MOD is a self-collected dataset using acoustic (8000Hz) and seismic (100Hz) sign
 - Vehicle data: [Box link](https://uofi.box.com/s/bv37vqfd0a5d9rhnvfoo7gld96gtj8jv)
 - Distance speed raw data: [Box link](https://uofi.box.com/s/8yffx3417mrxbdsqqtder4d7kk7rryb8)
 
-#### 🆕 [MỚI] Kaggle mirror
+#### [NEW] Kaggle mirror
 
 The raw vehicle data is also available as a Kaggle dataset: `nguyenmp/focal-dataset` (about 21.7 GB, 579 files, structure `MOD_vehicle/raw_data/<vehicle>/<sensor>/...`).
 
@@ -90,7 +90,7 @@ A script that lists all files and downloads only the required ones (with retries
 
 ### Data preprocessing
 
-1. Update directories in `src/data_preprocess/MOD/preprocessing_config.py` ✏️ [SỬA] (the original README wrote `proprocessing_configs.py`, which does not exist):
+1. Update directories in `src/data_preprocess/MOD/preprocessing_config.py` [UPDATE] (the original README wrote `proprocessing_configs.py`, which does not exist):
    - `input_path`: path to `.../MOD_vehicle/raw_data`
    - `output_directory`: where processed samples are written (e.g. `/content/processed` on Colab)
 2. `cd src/data_preprocess/MOD/`
@@ -98,7 +98,7 @@ A script that lists all files and downloads only the required ones (with retries
 4. Partition data
 5. Please update the index path configurations in `src/data/*.yaml`
 
-🆕 [MỚI] **Order matters.** To use the full dataset (labeled data plus the extra vehicles for pretraining), run the four scripts in this exact order, since each uses the output of the previous one:
+[NEW] **Order matters.** To use the full dataset (labeled data plus the extra vehicles for pretraining), run the four scripts in this exact order, since each uses the output of the previous one:
 
 1. `extract_samples.py`
 2. `partition_data.py`
@@ -141,13 +141,13 @@ python partition_data.py
 
 ##### Partition speed_distance data
 
-✏️ [SỬA] (the original command was missing the `.py` extension)
+[UPDATE] (the original command was missing the `.py` extension)
 
 ```bash
 python partition_data_speed_distance.py
 ```
 
-#### 🆕 [MỚI] Index files and paths
+#### [NEW] Index files and paths
 
 After partitioning, `output_directory/time_data_partition/` contains `train_index.txt`, `val_index.txt`, `test_index.txt` and `pretrain_index.txt`. Each line is the absolute path of one `.pt` sample. If you preprocess on one machine and train on another, rewrite the path prefix in these files, e.g.:
 
@@ -169,11 +169,11 @@ Please download the dataset from the provided links in the Dataset section. The 
 python train.py --help
 ```
 
-All commands below must be run from the `src/` directory, because the code reads `./data/[DATASET].yaml` and writes weights to `../weights`. 🆕 [MỚI]
+All commands below must be run from the `src/` directory, because the code reads `./data/[DATASET].yaml` and writes weights to `../weights`. [NEW]
 
 #### Supervised Training
 
-✏️ [SỬA] The following command will run supervised training for DeepSense (`-model=DeepSense`), Transformer (`-model=SW_Transformer`), or DINOv3 (`-model=DINOv3`).
+[UPDATE] The following command will run supervised training for DeepSense (`-model=DeepSense`), Transformer (`-model=SW_Transformer`), or DINOv3 (`-model=DINOv3`).
 
 ```bash
 python train.py -model=[MODEL] -dataset=[DATASET]
@@ -185,7 +185,7 @@ python train.py -model=[MODEL] -dataset=[DATASET]
 python train.py -model=[MODEL] -dataset=[DATASET] -learn_framework=FOCAL
 ```
 
-🆕 [MỚI] **Notes for the DINOv3 backbone on a 16 GB GPU (e.g. Colab T4):**
+[NEW] **Notes for the DINOv3 backbone on a 16 GB GPU (e.g. Colab T4):**
 
 - The default batch size of 256 runs out of memory. Use `-batch_size=64` (must be divisible by the sequence length 4). Fewer samples per batch means fewer negatives for contrastive learning, which may slightly reduce quality.
 - The default of 6000 pretraining epochs is not practical on Colab. Do a smoke test with 2 epochs first, then increase `train_epochs` under `FOCAL → pretrain_lr_scheduler` in the YAML (e.g. 100).
@@ -202,13 +202,13 @@ python train.py -model=[MODEL] -dataset=[DATASET] -learn_framework=FOCAL -task=[
 ```
 
 - Note that the path to the model weight is the folder under the generated `weights/[DATASET]_[MODEL]/` directory.
-- 🆕 [MỚI] The first pretraining run creates `weights/MOD_DINOv3/exp0_contrastive_FOCAL/`; later runs create `exp1_...`, `exp2_...`, and so on.
+- [NEW] The first pretraining run creates `weights/MOD_DINOv3/exp0_contrastive_FOCAL/`; later runs create `exp1_...`, `exp2_...`, and so on.
 
 ### Testing
 
 #### Supervised
 
-✏️ [SỬA] (the original command was missing `=` after `-dataset`)
+[UPDATE] (the original command was missing `=` after `-dataset`)
 
 ```bash
 python test.py -model=[MODEL] -dataset=[DATASET] -model_weight=[PATH TO MODEL WEIGHT]
@@ -216,7 +216,7 @@ python test.py -model=[MODEL] -dataset=[DATASET] -model_weight=[PATH TO MODEL WE
 
 #### FOCAL
 
-✏️ [SỬA] (same fix)
+[UPDATE] (same fix)
 
 ```bash
 python test.py -model=[MODEL] -dataset=[DATASET] -stage=finetune -task=[TASK] -model_weight=[PATH TO MODEL WEIGHT]
@@ -226,7 +226,7 @@ python test.py -model=[MODEL] -dataset=[DATASET] -stage=finetune -task=[TASK] -m
 
 See the file `src/data/*.yaml` for specific model configurations for each dataset.
 
-### 🆕 [MỚI] DINOv3 configuration
+### [NEW] DINOv3 configuration
 
 To add the DINOv3 backbone, the following changes are made:
 
@@ -243,7 +243,7 @@ Because the DINOv3 encoder was pretrained on natural RGB images while the input 
 
 ## License
 
-This project is released under the MIT license. See `LICENSE` for details. 🆕 [MỚI] DINOv3 weights are distributed by Meta under their own license; please read it on the Hugging Face model page before use.
+This project is released under the MIT license. See `LICENSE` for details. [NEW] DINOv3 weights are distributed by Meta under their own license; please read it on the Hugging Face model page before use.
 
 ## Citation
 
